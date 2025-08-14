@@ -1,0 +1,31 @@
+[project]
+name = "rodeo_analysis"
+version = "0.0.1a1"
+license = "MIT"
+license-files = ["LICENSE.txt"] 
+authors = [
+	{name = "Logan Borger", email = "ltborger@alaska.edu"}
+]
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=74.1.0",
+    "cython>=3",
+]
+[project.optional-dependencies]
+examples = [
+    "pandas",
+    "geemap",
+    "ee",
+    "google.colab",
+    "numpy",
+    "seaborn",
+    "matplotlib.pyplot",
+    "math",
+    "scipy.stats",
+    "statsmodels.stats.multicomp",
+]
+docs = [
+    "mkdocs-material",
+]
