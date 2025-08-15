@@ -623,7 +623,8 @@ print(similar_sites_2.Location.unique())
 
 #Assess Additional Communities
 
-The established relationship can be applied to the rest of the Alaskan villages to characterize their potential.
+The established relationship can be applied to the rest of the Alaskan villages to characterize their potential. <br>
+To start, we will create a dataframe using the village data csv file. We preliminarily filter out all of the locations with populations equal to 0.
 """
 
 # making dataframe
@@ -642,6 +643,8 @@ filtered_village_location = additional_village_locations[additional_village_loca
 print(filtered_village_location)
 
 filtered_village_location
+
+"""Now we need to extract its context to create a unify the data with its corresponding RODEO data."""
 
 # Extract Location Names
 village_location_list = []
@@ -766,16 +769,13 @@ print(combined_village_df)
 
 potential_stats
 
-"""# Work in Progress
-Analyze the `combined_village_df` and categorize each village's potential ('Lowest', 'Low', 'Good', 'Great') based on its average width and discharge relative to the thresholds defined in the `potential_stats` DataFrame. Create a new DataFrame containing the 'Location', assigned 'Potential', average 'Width', and average 'Q' for each village.
+"""# Workflow for Defining Village Potential
+First, we are going to define thresholds from the potential_stats dataframe. Then we are going to analyze the combined_village_df by these metrics to categorize each village location's potential ('Lowest', 'Low', 'Good', 'Great') based on its average width and discharge. Finally, we are going to create a new DataFrame containing the 'Location', assigned 'Potential', average 'Width', and average 'Q' for each village.
 
 ## Calculate average width and discharge for each village
 
-### Subtask:
-Group the `combined_village_df` by 'Location' and calculate the mean 'Width' and 'Q' for each village.
-
-**Reasoning**:
-The subtask is to group the combined_village_df by 'Location' and calculate the mean of 'Width' and 'Q' for each location. This can be achieved by using the `groupby()` method and the `mean()` aggregation function in pandas.
+### Workflow:
+Group the combined_village_df by 'Location' and calculate the mean 'Width' and 'Q' for each village.
 """
 
 # Group by 'Location' and calculate the mean of 'Width' and 'Q'
@@ -786,11 +786,9 @@ display(village_avg_features)
 
 """## Define potential thresholds
 
-### Subtask:
-Extract the mean Width and Discharge values for each potential category ('Lowest', 'Low', 'Good', 'Great') from the `potential_stats` DataFrame.
+### Workflow:
+Extract the mean Width and Discharge values for each potential category ('Lowest', 'Low', 'Good', 'Great') from the potential_stats dataFrame.
 
-**Reasoning**:
-Extract the mean Width and Discharge for each potential category from the potential_stats DataFrame.
 """
 
 mean_width_good = potential_stats.loc['Good', 'Width']['mean']
@@ -816,11 +814,9 @@ print(f"Mean Discharge (Lowest): {mean_discharge_lowest}")
 
 """## Categorize villages based on thresholds
 
-### Subtask:
+### Workflow:
 Categorize villages based on their average width and discharge relative to the defined potential thresholds.
 
-**Reasoning**:
-Define a function to categorize village potential based on average width and discharge relative to the mean thresholds, and apply it to the village features dataframe.
 """
 
 def categorize_potential(row):
@@ -843,11 +839,9 @@ display(village_avg_features)
 
 """## Create final dataframe
 
-### Subtask:
+### Workflow:
 Construct a new DataFrame containing the 'Location', assigned 'Potential', average 'Width', and average 'Q' for each village.
 
-**Reasoning**:
-Construct a new DataFrame containing the 'Location', assigned 'Potential', average 'Width', and average 'Q' for each village.
 """
 
 # Create a new DataFrame with selected columns
@@ -855,69 +849,3 @@ final_village_potential = village_avg_features[['Assigned Potential', 'Width', '
 
 # Display the new DataFrame
 display(final_village_potential)
-
-"""## Display the final dataframe
-
-### Subtask:
-Display the final dataframe containing the assigned potential and average river features for each village.
-
-**Reasoning**:
-Display the final dataframe containing the assigned potential and average river features for each village.
-"""
-
-print(final_village_potential)
-
-"""## Summary:
-
-### Data Analysis Key Findings
-
-* The average width and discharge were calculated for each of the 124 villages in the dataset.
-* The threshold values for classifying villages into 'Lowest', 'Low', 'Good', and 'Great' potential categories were successfully extracted from the `potential_stats` DataFrame.
-* Each village was assigned a potential category based on its average width and discharge relative to the established thresholds.
-* A final DataFrame was created, presenting the 'Location' of each village along with its assigned 'Potential', average 'Width', and average 'Q'.
-
-### Insights or Next Steps
-
-* The resulting DataFrame provides a clear categorization of villages based on their river characteristics, which can be used to prioritize locations for potential river-related projects or interventions.
-* Further analysis could involve exploring the distribution of villages across the different potential categories and investigating other factors that might influence a village's potential.
-
-## Create final dataframe
-
-### Subtask:
-Construct a new DataFrame containing the 'Location', assigned 'Potential', average 'Width', and average 'Q' for each village.
-
-**Reasoning**:
-Construct a new DataFrame containing the 'Location', assigned 'Potential', average 'Width', and average 'Q' for each village.
-"""
-
-# Create a new DataFrame with selected columns
-final_village_potential = village_avg_features[['Assigned Potential', 'Width', 'Q']]
-
-# Display the new DataFrame
-display(final_village_potential)
-
-"""## Display the final dataframe
-
-### Subtask:
-Display the final dataframe containing the assigned potential and average river features for each village.
-
-**Reasoning**:
-Display the final dataframe containing the assigned potential and average river features for each village.
-"""
-
-print(final_village_potential)
-
-"""## Summary:
-
-### Data Analysis Key Findings
-
-* The average width and discharge were calculated for each of the 124 villages in the dataset.
-* The threshold values for classifying villages into 'Lowest', 'Low', 'Good', and 'Great' potential categories were successfully extracted from the `potential_stats` DataFrame.
-* Each village was assigned a potential category based on its average width and discharge relative to the established thresholds.
-* A final DataFrame was created, presenting the 'Location' of each village along with its assigned 'Potential', average 'Width', and average 'Q'.
-
-### Insights or Next Steps
-
-* The resulting DataFrame provides a clear categorization of villages based on their river characteristics, which can be used to prioritize locations for potential river-related projects or interventions.
-* Further analysis could involve exploring the distribution of villages across the different potential categories and investigating other factors that might influence a village's potential.
-"""
